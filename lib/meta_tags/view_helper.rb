@@ -167,6 +167,10 @@ module MetaTags
       keywords = normalize_keywords(meta_tags[:keywords])
       result << tag(:meta, :name => :keywords, :content => keywords) unless keywords.blank?
 
+      # author
+      author = normalize_author(meta_tags[:author])
+      result << tag(:meta, :name => :author, :content => author) unless author
+
       # noindex & nofollow
       noindex_name  = String === meta_tags[:noindex]  ? meta_tags[:noindex]  : 'robots'
       nofollow_name = String === meta_tags[:nofollow] ? meta_tags[:nofollow] : 'robots'
@@ -220,6 +224,10 @@ module MetaTags
     end
 
     private
+      def normalize_author(author)
+        return '' if author.blank?
+        truncate(strip_tags(author).gsub(/\s+/, ' '), :length => 200)
+      end
 
       def normalize_title(title)
         Array(title).map { |t| h(strip_tags(t)) }
