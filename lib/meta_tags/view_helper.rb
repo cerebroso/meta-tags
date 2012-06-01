@@ -169,7 +169,7 @@ module MetaTags
 
       # author
       author = normalize_author(meta_tags[:author])
-      result << tag(:meta, :name => :author, :content => author) unless author
+      result << tag(:meta, :name => :author, :content => author) unless author.blank?
 
       # noindex & nofollow
       noindex_name  = String === meta_tags[:noindex]  ? meta_tags[:noindex]  : 'robots'
